@@ -35,3 +35,17 @@ model MeasurementUnit {
   type                                       MeasurementType
 }
 
+enum EventType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+model Event {
+  createdAt                                  DateTime                                     @default(now())
+  eventId                                    String                                       @id @default(cuid())
+  eventType                                  EventType
+  model                                      String
+  payload                                    Json
+}
+
