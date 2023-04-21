@@ -14,3 +14,9 @@ model Country {
   code                                       String                                       @id @unique
   name                                       String
 }
+
+model Currency {
+  code                                       String                                       @id @unique
+  name                                       String
+  symbol                                     String
+}
