@@ -20,3 +20,18 @@ model Currency {
   name                                       String
   symbol                                     String
 }
+
+enum MeasurementType {
+  AREA
+  LENGTH
+  MASS
+  VOLUME
+  QUANTITY
+}
+
+model MeasurementUnit {
+  code                                       String                                       @id @unique
+  name                                       String
+  type                                       MeasurementType
+}
+
