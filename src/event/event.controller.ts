@@ -29,8 +29,8 @@ export class EventController {
     };
   }
 
-  @Get(':eventId')
-  findOne(@Param('eventId') eventId: string): Promise<Event> {
-    return this.eventService.findOne({ where: { eventId } });
+  @Get(':id')
+  findOne(@Param('id') id: string): Promise<Event> {
+    return this.eventService.findOne({ where: { id } });
   }
 }

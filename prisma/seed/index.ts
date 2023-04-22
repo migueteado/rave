@@ -1,5 +1,11 @@
 import { PrismaClient } from '@prisma/client';
-import { seedCountries, seedCurrencies, seedMeasurementUnits } from './data';
+import {
+  seedCountries,
+  seedCurrencies,
+  seedMeasurementUnits,
+  seedUserPermissions,
+  seedUsers,
+} from './data';
 
 const prisma = new PrismaClient();
 
@@ -9,6 +15,8 @@ const main = async () => {
   await seedCountries(prisma);
   await seedCurrencies(prisma);
   await seedMeasurementUnits(prisma);
+  await seedUsers(prisma);
+  await seedUserPermissions(prisma);
 
   await prisma.$disconnect();
 };

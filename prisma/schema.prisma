@@ -43,9 +43,51 @@ enum EventType {
 
 model Event {
   createdAt                                  DateTime                                     @default(now())
-  eventId                                    String                                       @id @default(cuid())
   eventType                                  EventType
+  id                                         String                                       @id @default(cuid())
   model                                      String
   payload                                    Json
+}
+
+// User model logic and dependencies
+model User {
+  createdAt                                  DateTime                                     @default(now())
+  email                                      String                                       @unique
+  id                                         String                                       @id @default(cuid())
+  name                                       String?
+  password                                   String
+  updatedAt                                  DateTime                                     @updatedAt
+
+  permissions                                UserPermissionOnUser[]
+}
+
+enum UserPermission {
+  USER_SELF_READ
+  USER_SELF_UPDATE
+  USER_SELF_DELETE
+  USER_READ
+  USER_CREATE
+  USER_UPDATE
+  USER_DELETE
+  CUSTOMER_READ
+  CUSTOMER_CREATE
+  CUSTOMER_UPDATE
+  CUSTOMER_DELETE
+  PRODUCT_READ
+  PRODUCT_CREATE
+  PRODUCT_UPDATE
+  PRODUCT_DELETE
+}
+
+model UserPermissionOnUser {
+  userId                    String
+  dateCreated               DateTime                      @default(now())
+  dateUpdated               DateTime                      @updatedAt
+  id                        String                        @id @default(uuid())
+
+  permission                UserPermission
+  user                      User                          @relation(fields: [userId], references: [id])
+
+  @@unique([userId, permission])
 }
 
