@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import jwtConfig from 'src/config/jwt-config';
 import * as Joi from 'joi';
 import { ConfigModule } from '@nestjs/config';
+import { CustomerModule } from './customer/customer.module';
 import config from 'src/config/config';
 
 @Module({
@@ -25,6 +26,7 @@ import config from 'src/config/config';
     EventModule,
     UserModule,
     AuthModule,
+    CustomerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

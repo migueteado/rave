@@ -45,6 +45,13 @@ export class UserController {
       cursor,
       where,
       orderBy,
+      include: {
+        permissions: {
+          select: {
+            permission: true,
+          },
+        },
+      },
     });
 
     return {

@@ -17,14 +17,20 @@ export class UserService {
   async findOne(
     userWhereUniqueInput: Prisma.UserWhereUniqueInput,
   ): Promise<User | undefined> {
-    return this.prismaService.user.findUnique({
+    return this.prismaService.user.findFirstOrThrow({
       where: userWhereUniqueInput,
+      include: {
+        permissions: true,
+      },
     });
   }
 
   async create(data: Prisma.UserCreateInput): Promise<User> {
     return this.prismaService.user.create({
       data,
+      include: {
+        permissions: true,
+      },
     });
   }
 
@@ -36,6 +42,9 @@ export class UserService {
     return this.prismaService.user.update({
       data,
       where,
+      include: {
+        permissions: true,
+      },
     });
   }
 

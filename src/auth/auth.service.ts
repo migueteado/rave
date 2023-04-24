@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.prismaService.user.findFirst({
+    const user = await this.prismaService.user.findFirstOrThrow({
       where: { email: email },
       include: {
         permissions: true,

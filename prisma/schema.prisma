@@ -42,7 +42,7 @@ enum EventType {
 }
 
 model Event {
-  createdAt                                  DateTime                                     @default(now())
+  dateCreated                                DateTime                                     @default(now())
   eventType                                  EventType
   id                                         String                                       @id @default(cuid())
   model                                      String
@@ -51,12 +51,12 @@ model Event {
 
 // User model logic and dependencies
 model User {
-  createdAt                                  DateTime                                     @default(now())
+  dateCreated                                DateTime                                     @default(now())
+  dateUpdated                                DateTime                                     @updatedAt
   email                                      String                                       @unique
   id                                         String                                       @id @default(cuid())
   name                                       String?
   password                                   String
-  updatedAt                                  DateTime                                     @updatedAt
 
   permissions                                UserPermissionOnUser[]
 }
@@ -91,3 +91,60 @@ model UserPermissionOnUser {
   @@unique([userId, permission])
 }
 
+// Customer model logic and dependencies
+
+model Customer {
+  dateCreated                                DateTime                                     @default(now())
+  dateUpdated                                DateTime                                     @updatedAt
+  email                                      String                                       @unique
+  firstName                                  String?
+  guest                                      Boolean                                      @default(false)
+  id                                         String                                       @id @default(cuid())
+  lastName                                   String?
+  name                                       String?
+  optIn                                      Boolean                                      @default(true)
+  phone                                      String? 
+  points                                     Int                                   
+
+  address                                    CustomerAddress[]
+  categories                                 CustomerCategory[]
+  notes                                      CustomerNotes[]
+}
+
+model CustomerNotes {
+  customerId                                 String
+  dateCreated                                DateTime                                     @default(now())
+  dateUpdated                                DateTime                                     @updatedAt
+  id                                         String                                       @id @default(cuid())
+  note                                       String
+
+  customer                                   Customer                                     @relation(fields: [customerId], references: [id])
+}
+
+model CustomerAddress {
+  city                                       String
+  countryCode                                String
+  country                                    String
+  customerId                                 String                                       @unique
+  default                                    Boolean                                      @default(false)
+  dateCreated                                DateTime                                     @default(now())
+  dateUpdated                                DateTime                                     @updatedAt
+  id                                         String                                       @id @default(cuid())
+  line1                                      String
+  line2                                      String?
+  note                                       String?
+  phone                                      String
+  postalCode                                 String
+  state                                      String
+
+  customer                                   Customer                                     @relation(fields: [customerId], references: [id])
+}
+
+model CustomerCategory {
+  dateCreated                                DateTime                                     @default(now())
+  dateUpdated                                DateTime                                     @updatedAt
+  id                                         String                                       @id @default(cuid())
+  name                                       String
+
+  customers                                  Customer[]
+}
