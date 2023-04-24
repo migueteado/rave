@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -144,5 +145,13 @@ export class UserController {
     });
 
     return updatedUser;
+  }
+
+  @Delete('/:id')
+  @Permissions(UserPermission.USER_DELETE)
+  async deleteOne(@Param('id') id: string) {
+    return this.userService.delete({
+      id: id,
+    });
   }
 }

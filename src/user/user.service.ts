@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -17,7 +17,7 @@ export class UserService {
   async findOne(
     userWhereUniqueInput: Prisma.UserWhereUniqueInput,
   ): Promise<User | undefined> {
-    return this.prismaService.user.findFirstOrThrow({
+    return this.prismaService.user.findFirst({
       where: userWhereUniqueInput,
       include: {
         permissions: true,
@@ -49,6 +49,13 @@ export class UserService {
   }
 
   async delete(where: Prisma.UserWhereUniqueInput): Promise<User> {
+    const user = await this.findOne(where);
+    if (user.name === 'Root Admin') {
+      throw new HttpException(
+        'Root Admin cannot be deleted',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
     return this.prismaService.user.delete({
       where,
     });

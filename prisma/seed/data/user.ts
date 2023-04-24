@@ -3,9 +3,9 @@ import * as bcrypt from 'bcrypt';
 
 export const users: Prisma.UserCreateManyInput[] = [
   {
-    email: 'seed@rave.is',
-    name: 'Rave Seed Account',
-    password: 'seedpassword',
+    email: 'root@rave.is',
+    name: 'Root Admin',
+    password: 'rootpassword',
   },
 ];
 

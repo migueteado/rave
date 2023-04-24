@@ -6,16 +6,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class EventService {
   constructor(private prismaService: PrismaService) {}
 
-  async registerEvent(args: Prisma.EventCreateInput) {
-    return this.create(args);
-  }
-
   async count(args: Prisma.EventCountArgs) {
     return this.prismaService.event.count(args);
-  }
-
-  async create(args: Prisma.EventCreateInput) {
-    return this.prismaService.event.create({ data: args });
   }
 
   async findMany(args: Prisma.EventFindManyArgs) {
